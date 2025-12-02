@@ -1,6 +1,7 @@
 package hu.abator.pokemonfightsimulatorservice.service;
 
-import hu.abator.pokemonfightsimulatorservice.domain.*;
+import hu.abator.pokemonfightsimulatorservice.domain.BattleEntity;
+import hu.abator.pokemonfightsimulatorservice.domain.PokemonEntity;
 import hu.abator.pokemonfightsimulatorservice.exception.CannotDetermineWinnerException;
 import hu.abator.pokemonfightsimulatorservice.repository.BattleRepository;
 import lombok.AccessLevel;
@@ -9,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.springframework.data.domain.Pageable.ofSize;
@@ -35,6 +37,6 @@ public class BattleService {
     }
 
     public @Nullable Set<BattleEntity> findBattles(int limit) {
-        return battleRepository.findAllByOrderByCreatedAtDesc(ofSize(limit));
+        return new HashSet<>(battleRepository.findAllByOrderByCreatedAtDesc(ofSize(limit)));
     }
 }
