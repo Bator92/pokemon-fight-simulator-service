@@ -1,21 +1,18 @@
 package hu.abator.pokemonfightsimulatorservice.manager;
 
-import com.triceracode.pokeapi.model.resource.pokemon.Pokemon;
 import hu.abator.pokemonfightsimulatorservice.domain.BattleEntity;
 import hu.abator.pokemonfightsimulatorservice.domain.PokemonEntity;
 import hu.abator.pokemonfightsimulatorservice.dto.BattleDto;
 import hu.abator.pokemonfightsimulatorservice.dto.BattleRequestDto;
 import hu.abator.pokemonfightsimulatorservice.mapper.BattleMapper;
-import hu.abator.pokemonfightsimulatorservice.mapper.PokemonMapper;
 import hu.abator.pokemonfightsimulatorservice.service.BattleService;
-import hu.abator.pokemonfightsimulatorservice.service.PokemonApiAdapterService;
 import hu.abator.pokemonfightsimulatorservice.service.PokemonService;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
-import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
@@ -33,7 +30,7 @@ public class BattleManager {
     BattleMapper battleMapper;
 
     @SneakyThrows
-    public @Nullable BattleDto start(BattleRequestDto req) {
+    public @NonNull BattleDto start(BattleRequestDto req) {
         PokemonEntity pokemon1 = pokemonService.getByName(req.getPokemon1Name());
         PokemonEntity pokemon2 = pokemonService.getByName(req.getPokemon2Name());
 
@@ -47,7 +44,7 @@ public class BattleManager {
         return battleMapper.toDto(battleService.save(battleEntity));
     }
 
-    public @Nullable Set<BattleDto> getBattles(int limit) {
+    public @NonNull Set<BattleDto> getBattles(int limit) {
         return battleMapper.toDtos(battleService.findBattles(limit));
     }
 }

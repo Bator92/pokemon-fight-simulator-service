@@ -29,10 +29,4 @@ public class PokemonApiAdapterService {
         return pokeApiService.pokemon().byName(pokemon.getName()).execute().body();
     }
 
-    @SneakyThrows
-    public Pokemon getByName(String name){
-        return pokeApiService.pokemon().byName(name).execute().body();
-    }
-
-
 }
