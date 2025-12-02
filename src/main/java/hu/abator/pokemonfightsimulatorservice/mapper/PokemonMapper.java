@@ -19,11 +19,6 @@ public class PokemonMapper {
                 .build();
     }
 
-    public int getRandomInt(int min, int max) {
-        Random random = new Random();
-        return random.nextInt(max - min) + min;
-    }
-
     public PokemonEntity toEntity(Pokemon pokemon){
         return PokemonEntity.builder()
                 .power(getRandomInt(1,20))
@@ -31,6 +26,11 @@ public class PokemonMapper {
                 .name(pokemon.getName())
                 .pictureUrl(pokemon.getSprites().getFrontDefault())
                 .build();
+    }
+
+    private int getRandomInt(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
     }
 
 }

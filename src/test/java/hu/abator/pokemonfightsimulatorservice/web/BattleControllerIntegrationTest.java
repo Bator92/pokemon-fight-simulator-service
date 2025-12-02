@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.abator.pokemonfightsimulatorservice.dto.BattleDto;
 import hu.abator.pokemonfightsimulatorservice.dto.BattleRequestDto;
 import hu.abator.pokemonfightsimulatorservice.dto.PokemonDto;
-import hu.abator.pokemonfightsimulatorservice.exception.NotFoundException;
 import hu.abator.pokemonfightsimulatorservice.manager.BattleManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -126,18 +125,6 @@ class BattleControllerIntegrationTest {
                 .andExpect(jsonPath("$[1].winnerPokemon.name").value("charizard"))
                 .andExpect(jsonPath("$[0].id").exists())
                 .andExpect(jsonPath("$[1].id").exists());
-    }
-
-    @Test
-    @DisplayName("GET /api/battles maps NotFoundException to 404")
-    void getBattles_notFound() throws Exception {
-        when(battleManager.getBattles(3)).thenThrow(new NotFoundException("no battles"));
-
-        mockMvc.perform(get("/api/battles").param("limit", "3").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.status").value(404))
-                .andExpect(jsonPath("$.error").value("Not Found"))
-                .andExpect(jsonPath("$.message").value("no battles"));
     }
 
     @Test
