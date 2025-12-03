@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -24,21 +25,23 @@ class PokemonApiAdapterServiceTest {
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private PokeAPIService pokeAPIService;
 
+    @Mock
+    private Random random;
+
     @InjectMocks
     private PokemonApiAdapterService service;
 
     @Test
     @DisplayName("getRandomPokemon returns detailed Pokemon fetched by name from a single-item list")
     void getRandomPokemon_singleItemList_returnsByName() throws Exception {
-        // given: prepare a single NamedAPIResource so randomness is deterministic
+        // given
         NamedAPIResource resource = org.mockito.Mockito.mock(NamedAPIResource.class);
         when(resource.getName()).thenReturn("pikachu");
 
-        // stub the list chain to return a single item list
         when(pokeAPIService.pokemon().list(anyLong(), anyLong()).execute().body().getResults())
                 .thenReturn(List.of(resource));
+        when(random.nextInt(1)).thenReturn(0);
 
-        // and stub the byName chain to return a Pokemon object
         Pokemon expected = org.mockito.Mockito.mock(Pokemon.class);
         when(pokeAPIService.pokemon().byName(eq("pikachu")).execute().body()).thenReturn(expected);
 

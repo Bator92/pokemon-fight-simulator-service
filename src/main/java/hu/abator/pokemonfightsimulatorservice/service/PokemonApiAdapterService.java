@@ -19,12 +19,12 @@ import java.util.Random;
 public class PokemonApiAdapterService {
 
     PokeAPIService pokeApiService;
+    Random random;
 
     @SneakyThrows
     public Pokemon getRandomPokemon(){
         List<NamedAPIResource> pokemonResults = Objects.requireNonNull(pokeApiService.pokemon().list(100L, 0L).execute().body()).getResults();
-        Random rand = new Random();
-        NamedAPIResource pokemon = pokemonResults.get(rand.nextInt(pokemonResults.size()));
+        NamedAPIResource pokemon = pokemonResults.get(random.nextInt(pokemonResults.size()));
 
         return pokeApiService.pokemon().byName(pokemon.getName()).execute().body();
     }

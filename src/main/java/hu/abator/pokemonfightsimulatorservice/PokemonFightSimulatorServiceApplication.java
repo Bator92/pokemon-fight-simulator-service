@@ -10,4 +10,5 @@ public class PokemonFightSimulatorServiceApplication {
 		SpringApplication.run(PokemonFightSimulatorServiceApplication.class, args);
 	}
 
+
 }

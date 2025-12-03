@@ -7,16 +7,26 @@ import com.triceracode.pokeapi.model.resource.pokemon.PokemonType;
 import hu.abator.pokemonfightsimulatorservice.domain.PokemonEntity;
 import hu.abator.pokemonfightsimulatorservice.dto.PokemonDto;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class PokemonMapperTest {
 
-    private final PokemonMapper mapper = new PokemonMapper();
+    @Mock
+    Random random;
+
+    @InjectMocks
+    PokemonMapper mapper;
 
     @Test
     void toDto_shouldMapAllFields() {
@@ -42,6 +52,7 @@ class PokemonMapperTest {
     @Test
     void toEntity_shouldMapFieldsFromPokemonResource() {
         // given
+        when(random.nextInt(1, 21)).thenReturn(5);
         Pokemon pokemon = mock(Pokemon.class);
         PokemonSprites sprites = mock(PokemonSprites.class);
         PokemonType typeSlot = mock(PokemonType.class);
@@ -61,6 +72,6 @@ class PokemonMapperTest {
         assertThat(entity.getName()).isEqualTo("charmander");
         assertThat(entity.getType()).isEqualTo("fire");
         assertThat(entity.getPictureUrl()).isEqualTo("https://img/charmander.png");
-        assertThat(entity.getPower()).isBetween(1, 19); // random
+        assertThat(entity.getPower()).isEqualTo(5);
     }
 }

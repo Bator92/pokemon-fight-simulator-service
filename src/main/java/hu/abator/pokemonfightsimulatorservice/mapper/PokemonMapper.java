@@ -3,12 +3,19 @@ package hu.abator.pokemonfightsimulatorservice.mapper;
 import com.triceracode.pokeapi.model.resource.pokemon.Pokemon;
 import hu.abator.pokemonfightsimulatorservice.domain.PokemonEntity;
 import hu.abator.pokemonfightsimulatorservice.dto.PokemonDto;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 @Component
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class PokemonMapper {
+
+    Random random;
 
     public PokemonDto toDto(PokemonEntity pokemon) {
         return PokemonDto.builder()
@@ -29,8 +36,7 @@ public class PokemonMapper {
     }
 
     private int getRandomInt(int min, int max) {
-        Random random = new Random();
-        return random.nextInt(max - min) + min;
+        return random.nextInt(min, max + 1);
     }
 
 }
