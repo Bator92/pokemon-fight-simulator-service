@@ -49,9 +49,10 @@ class BattleControllerTest {
     @DisplayName("POST /api/battles returns BattleDto JSON on success")
     void start_returnsOkJson() throws Exception {
         // given
-        BattleRequestDto req = new BattleRequestDto();
-        req.setPokemon1Name("pikachu");
-        req.setPokemon2Name("bulbasaur");
+        BattleRequestDto req = BattleRequestDto.builder()
+                .pokemon1Name("pikachu")
+                .pokemon2Name("bulbasaur")
+                .build();
 
         PokemonDto winner = PokemonDto.builder().name("pikachu").type("electric").power(55).pictureUrl("u1").build();
         PokemonDto looser = PokemonDto.builder().name("bulbasaur").type("grass").power(49).pictureUrl("u2").build();
@@ -79,9 +80,10 @@ class BattleControllerTest {
     @DisplayName("POST /api/battles maps IllegalArgumentException to 400 with standard error body")
     void start_badRequestOnIllegalArgument() throws Exception {
         // given
-        BattleRequestDto req = new BattleRequestDto();
-        req.setPokemon1Name("invalid");
-        req.setPokemon2Name("invalid");
+        BattleRequestDto req = BattleRequestDto.builder()
+                .pokemon1Name("invalid")
+                .pokemon2Name("invalid")
+                .build();
 
         when(battleManager.start(any(BattleRequestDto.class))).thenThrow(new IllegalArgumentException("invalid pokemons"));
 

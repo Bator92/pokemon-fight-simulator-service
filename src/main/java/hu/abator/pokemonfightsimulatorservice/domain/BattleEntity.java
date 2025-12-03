@@ -1,6 +1,5 @@
 package hu.abator.pokemonfightsimulatorservice.domain;
 
-import com.triceracode.pokeapi.model.resource.pokemon.Pokemon;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = {"id", "uuid"})
 public class BattleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
